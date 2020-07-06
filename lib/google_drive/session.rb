@@ -17,6 +17,7 @@ require 'google_drive/spreadsheet'
 require 'google_drive/worksheet'
 require 'google_drive/collection'
 require 'google_drive/file'
+require 'google_drive/calendar'
 require 'google_drive/config'
 require 'google_drive/access_token_credentials'
 
@@ -215,6 +216,11 @@ module GoogleDrive
     # Proc or Method called when authentication has failed.
     # When this function returns +true+, it tries again.
     attr_accessor :on_auth_fail
+
+    # Returns an instance of Google::Apis::CalendarV3::CalendarService.
+    def calendar_service
+      @fetcher.calendar
+    end
 
     # Returns an instance of Google::Apis::DriveV3::DriveService.
     def drive_service

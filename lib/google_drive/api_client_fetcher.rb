@@ -5,6 +5,7 @@ require 'net/https'
 require 'uri'
 require 'google/apis/drive_v3'
 require 'google/apis/sheets_v4'
+require 'google/apis/calendar_v3'
 Net::HTTP.version_1_2
 
 module GoogleDrive
@@ -19,10 +20,11 @@ module GoogleDrive
     end
 
     def initialize(authorization, client_options, request_options)
+      @calendar = Google::Apis::CalendarV3::CalendarService.new
       @drive = Google::Apis::DriveV3::DriveService.new
       @sheets = Google::Apis::SheetsV4::SheetsService.new
 
-      [@drive, @sheets].each do |service|
+      [@calendar, @drive, @sheets].each do |service|
         service.authorization = authorization
 
         # Make the timeout virtually infinite because some of the operations
@@ -47,6 +49,7 @@ module GoogleDrive
       end
     end
 
+    attr_reader(:calendar)
     attr_reader(:drive)
     attr_reader(:sheets)
 
